@@ -1,0 +1,19 @@
+# Archivos y Carpetas de Java/NetBeans a Ignorar
+
+# Carpeta de compilación de NetBeans/IDE (clases, archivos temporales)
+build/
+dist/
+nbproject/private/
+
+# Archivos de configuración de NetBeans del usuario (no compartir)
+*.class
+*.jar
+*.war
+*.zip
+*.log
+
+# Archivos de depuración y temporales
+*.swp
+*~
+# Archivos específicos de NetBeans que dependen del usuario
+nbproject/private/
