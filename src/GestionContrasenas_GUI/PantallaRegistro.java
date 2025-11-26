@@ -5,26 +5,27 @@
 package GestionContrasenas_GUI;
 
 import GestionContrasenas_DTO.Registro;
-import javax.swing.JFrame;
 
 /**
+ * PantallaRegistro (JDialog). Ventana modal que contiene el formulario para el
+ * alta de una nueva contraseña
  *
  * @author Jaime
  */
 public class PantallaRegistro extends javax.swing.JDialog {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaRegistro.class.getName());
-
     /**
-     * Creates new form PantallaRegistro
+     * Constructor del JDialog.
      *
-     * @param parent
-     * @param modal
+     * @param parent La ventana principal (PantallaPrincipal) que invoca este
+     * diálogo.
+     * @param modal Indica si la ventana es modal (true), bloqueando la ventana
+     * padre.
      */
     public PantallaRegistro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        // Configuración de la ventana (Tamaño, centrado y estilo)
         setTitle("NotePass - Nuevo Registro"); // Título personalizado
         setSize(800, 550);                     // Mismo tamaño que la Principal (600x500)
         setLocationRelativeTo(null);           // Centrada en el monitor
@@ -202,7 +203,7 @@ public class PantallaRegistro extends javax.swing.JDialog {
                             .addGroup(pnlFondoRegistroLayout.createSequentialGroup()
                                 .addComponent(pwdFContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnGenerar)
+                                .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(pnlFondoRegistroLayout.createSequentialGroup()
                                 .addGroup(pnlFondoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -215,8 +216,8 @@ public class PantallaRegistro extends javax.swing.JDialog {
                                 .addGap(38, 38, 38))
                             .addGroup(pnlFondoRegistroLayout.createSequentialGroup()
                                 .addGroup(pnlFondoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(chkMostrar))
+                                    .addComponent(chkMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(pnlFondoRegistroLayout.createSequentialGroup()
                         .addGroup(pnlFondoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,18 +301,32 @@ public class PantallaRegistro extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Manejador del evento click en el JPasswordField (no funcional, se
+     * mantiene por estructura).
+     */
     private void pwdFContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdFContrasenaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pwdFContrasenaActionPerformed
-
+    
+    /**
+     * Manejador del evento click en el CheckBox MOSTRAR. Alterna la visibilidad
+     * de la contraseña en el JPasswordField (setEchoChar).
+     */
     private void chkMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkMostrarActionPerformed
         if (chkMostrar.isSelected()) {
+            // Muestra el texto (carácter de eco nulo)
             pwdFContrasena.setEchoChar((char) 0);
         } else {
+            // Oculta el texto (carácter de eco *)
             pwdFContrasena.setEchoChar('*');
         }
     }//GEN-LAST:event_chkMostrarActionPerformed
 
+    /**
+     * Manejador del evento click en el botón GENERAR. Genera una contraseña
+     * aleatoria y compleja de 12 caracteres.
+     */
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         String mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String minusculas = "abcdefghijklmnopqrstuvwxyz";
@@ -321,16 +336,22 @@ public class PantallaRegistro extends javax.swing.JDialog {
         String conjunto = mayusculas + minusculas + numeros + simbolos;
 
         String contrasenaGenerada = "";
-
+        // Bucle para generar 12 caracteres aleatorios
         for (int i = 0; i < 12; i++) {
             int aleatorio = (int) (Math.random() * conjunto.length());
             contrasenaGenerada += conjunto.charAt(aleatorio);
         }
+        // Muestra la contraseña generada en el campo JPasswordField
         pwdFContrasena.setText(contrasenaGenerada);
     }//GEN-LAST:event_btnGenerarActionPerformed
 
+    /**
+     * Manejador del evento click en el botón VOLVER (JOptionPane de
+     * Confirmación). Pregunta al usuario si desea salir, advirtiendo sobre la
+     * pérdida de datos.
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // 1. Lanzamos la pregunta de confirmación
+        //Lanzamos la pregunta de confirmación
         int opcion = javax.swing.JOptionPane.showConfirmDialog(
                 this,
                 "¿Volver a la pantalla principal?\nSe perderán los datos que no hayas guardado.",
@@ -338,15 +359,21 @@ public class PantallaRegistro extends javax.swing.JDialog {
                 javax.swing.JOptionPane.YES_NO_OPTION,
                 javax.swing.JOptionPane.WARNING_MESSAGE); // Icono de advertencia
 
-        // 2. Verificamos la respuesta
+        //Verificamos la respuesta
         if (opcion == javax.swing.JOptionPane.YES_OPTION) {
             // Solo cerramos si el usuario dice "SÍ"
             this.dispose();
         }
 
     }//GEN-LAST:event_btnVolverActionPerformed
-
+    
+    /**
+     * Manejador del evento click en el botón REGISTRAR. Implementa el flujo
+     * completo: Validación, Confirmación, Creación del DTO y envío a la
+     * PantallaPrincipal.
+     */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        //1. Captura y validación
         String servicio = txtServicio.getText();
         String usuario = txtUsuario.getText();
         String contrasena = new String(pwdFContrasena.getPassword());
@@ -355,79 +382,42 @@ public class PantallaRegistro extends javax.swing.JDialog {
             javax.swing.JOptionPane.showMessageDialog(this, "El servicio y la contraseña son obligatorios");
             return;
         }
-
+        
+        //2. Captura de datos especiales
         String categoria = cmbCategoria.getSelectedItem().toString();
         boolean dobleFactor = chkDobleFactor.isSelected();
-
         String notas = txtAreaNotas.getText();
+        
+        //Determinamos el valor del Radiobutton
         String seguridad;
-
         if (rbtnAlta.isSelected() == true) {
             seguridad = "Alta";
         } else {
             seguridad = "Baja";
         }
-
+        
+        //3. Confirmación y envio
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, "¿Registrar nueva contraseña?", "Confirmar", javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
 
-            // A. Creamos el objeto (El paquete con todos los datos)
-            // Asegúrate de importar arriba: import GestionContrasenas_DTO.Registro;
-            GestionContrasenas_DTO.Registro nuevoRegistro = new GestionContrasenas_DTO.Registro(servicio, usuario, contrasena, categoria, seguridad, dobleFactor, notas);
+            //Creamos el objeto DTO (El paquete con todos los datos)
+            Registro nuevoRegistro = new GestionContrasenas_DTO.Registro(servicio, usuario, contrasena, categoria, seguridad, dobleFactor, notas);
 
-            // B. Mostramos el resumen (Requisito del enunciado) -> Usa el toString()
+            //Mostramos el resumen usando .toString();
             javax.swing.JOptionPane.showMessageDialog(this, nuevoRegistro.toString());
 
-            // C. ENVIAR A LA PANTALLA PRINCIPAL (El paso clave)
+            // Enviamos a la pantalla principal usando .getParent()
             // Recuperamos a la ventana "madre" (this.getParent) y la convertimos a PantallaPrincipal
-            GestionContrasenas_GUI.PantallaPrincipal padre = (GestionContrasenas_GUI.PantallaPrincipal) this.getParent();
-
-            // Llamamos al método "puerta" que creamos en la principal
+            PantallaPrincipal padre = (GestionContrasenas_GUI.PantallaPrincipal) this.getParent();
             padre.anadirRegistro(nuevoRegistro);
 
-            // D. Cerrar esta ventana
+            // Cierra esta ventana
             this.dispose();
         }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                PantallaRegistro dialog = new PantallaRegistro(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerar;

@@ -5,35 +5,47 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 
 /**
+ * Ventana principal de la aplicación NotePass. Gestiona la visualización de
+ * contraseñas en una tabla y la navegación.
  *
  * @author Jaime
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PantallaPrincipal.class.getName());
 
     /**
-     * Creates new form PantallaPrincipal
+     * Constructor de PantallaPrincipal. Inicializa la interfaz y configura la
+     * tabla.
      */
     public PantallaPrincipal() {
         initComponents();
-        
+
+        // Configuración manual de la ventana
         setTitle("NotePass - Gestor v1.0"); //titulo de la ventana
         setSize(800, 550); //Tamaño de nuestra App
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Al pulsar sobre la X se cierra el programa.
         setLocationRelativeTo(null); //La pantalla principal aparece en el centro del monitor.
+        // Inicializamos el modelo de la tabla
         inicializarTabla();
     }
 
-    //Metodo inicializar tabla
+    /**
+     * Configura el modelo de datos de la tabla (JTable). Define las columnas
+     * que tendrá la tabla visualmente.
+     */
     private void inicializarTabla() {
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(new String[]{"Servicio", "Usuario", "Contraseña", "Categoria", "Seguridad", "Doble Factor", "Notas"});
         tblContrasenas.setModel(dtm);
     }
-    
-    
-    
+
+    /**
+     * Método público para añadir registros. Es llamado por la ventana
+     * secundaria para insertar datos en la tabla.
+     *
+     * @param registro El objeto DTO con los datos a insertar.
+     */
     public void anadirRegistro(Registro registro) {
         DefaultTableModel dtm = (DefaultTableModel) tblContrasenas.getModel();
         dtm.addRow(registro.toArrayStringRegistro());
@@ -162,18 +174,26 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción del botón "REGISTRAR CONTRASEÑA". Abre la ventana modal de
+     * registro.
+     */
     private void btnNuevaContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaContrasenaActionPerformed
         PantallaRegistro pantallaRegistro = new PantallaRegistro(this, true);
-        
         pantallaRegistro.setVisible(true);
     }//GEN-LAST:event_btnNuevaContrasenaActionPerformed
 
+    /**
+     * Acción del botón "SALIR".
+     * Cierra la aplicación completamente.
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    /**
-     * @param args the command line arguments
+     /**
+     * Método main. Punto de entrada de la aplicación.
+     * @param args
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -1,8 +1,15 @@
 package GestionContrasenas_DTO;
 
+/**
+ * Clase DTO (Data Transfer Object) Registro. Representa el modelo de datos de
+ * una contraseña dentro de la aplicación. Sirve para transportar la información
+ * desde el formulario hasta la tabla de la pantalla principal.
+ *
+ * * @author Jaime
+ */
 public class Registro {
 
-    //Atributos
+    // --- ATRIBUTOS  ---
     private String servicio;
     private String usuario;
     private String contrasena;
@@ -11,11 +18,27 @@ public class Registro {
     private boolean dobleFactor;
     private String notas;
 
-    //Constuctor vacio
+    // --- CONSTRUCTORES ---
+    
+    /**
+     * Constructor vacío. Crea una instancia de Registro sin datos iniciales.
+     * Necesario para operaciones genéricas.
+     */
     public Registro() {
     }
 
-    //Constructor lleno
+    /**
+     * Constructor completo. Inicializa un nuevo Registro asignando valor a
+     * todos sus atributos.
+     *
+     * @param servicio Nombre del servicio.
+     * @param usuario Nombre de usuario.
+     * @param contrasena Contraseña.
+     * @param categoria Categoría seleccionada.
+     * @param seguridad Nivel de seguridad seleccionado.
+     * @param dobleFactor Estado del 2FA (true = activado).
+     * @param notas Observaciones adicionales.
+     */
     public Registro(String servicio, String usuario, String contrasena, String categoria, String seguridad, boolean dobleFactor, String notas) {
         this.servicio = servicio;
         this.usuario = usuario;
@@ -26,6 +49,7 @@ public class Registro {
         this.notas = notas;
     }
 
+    // --- MÉTODOS GETTER Y SETTER  ---
     public String getServicio() {
         return servicio;
     }
@@ -82,6 +106,14 @@ public class Registro {
         this.notas = notas;
     }
 
+    // --- MÉTODOS PERSONALIZADOS PARA LA VISTA ---
+    /**
+     * Sobreescritura del método toString. Genera un resumen formateado y
+     * legible del registro. Se utiliza para mostrar la información en el
+     * JOptionPane de confirmación final.
+     *
+     * @return String con el resumen estructurado y saltos de línea.
+     */
     @Override
     public String toString() {
         return "NUEVA CONTRASEÑA REGISTRADA\n"
@@ -99,7 +131,14 @@ public class Registro {
                 + "================================";
     }
 
-    // Método que crea un array de Strings para la tabla
+    /**
+     * Convierte el objeto Registro en un array de Strings (fila de tabla). Este
+     * método facilita la inserción de datos en el modelo de la JTable de la
+     * Pantalla Principal. Realiza la conversión visual del booleano 2FA a "Sí"
+     * o "No".
+     *
+     * @return Array de String[] con los 7 campos ordenados.
+     */
     public String[] toArrayStringRegistro() {
         String[] s = new String[7];
 
@@ -109,7 +148,7 @@ public class Registro {
         s[3] = categoria;
         s[4] = seguridad;
 
-        // Convertimos el boolean a String para que entre en el array
+        // Convertimos el valor lógico (boolean) a texto legible para el usuario
         if (dobleFactor) {
             s[5] = "Sí";
         } else {
